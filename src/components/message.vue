@@ -2,6 +2,19 @@
 <div>
     <h1 class="text-center">Secret to Karthik</h1>
     <p class="text-center" >No one can find you, even Karthik. But the Messages will be public!</p>
+<b-alert 
+    v-if='isempty'
+    class="text-center"
+    show variant="danger">
+    You can't send an empty message
+</b-alert>
+<b-alert 
+    v-if='issent'
+    class="text-center"
+    show variant="info">
+    Message successfully sent!
+</b-alert>
+
 <b-form-input 
     style="width:60%;margin:10px 20% 0 20%;"
     placeholder="message"
@@ -43,17 +56,27 @@ export default {
     name:'message',
     data(){
         return{
-            msg:null,
+            msg:'',
             readmsg:[],
-            isempty:true
+            issent:false,
+            isempty:false
         };
     },
+    created:{
+       
+    },
     methods:{
+       
         updateMessage()
-        {
+        {   if(this.msg==""){this.isempty=true; this.issent=false; return;}
             window.db.collection('test').add({
                 message:this.msg
             });
+            this.msg="";
+
+            this.issent=true;
+            this.isempty=false;
+
         },
          readMessage()
         {
