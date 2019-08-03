@@ -1,7 +1,7 @@
 <template>
 <div>
     <h1 class="text-center">Secret to Karthik</h1>
-    <p class="text-center" >Ever hesitated to tell something to Karthik thinking uncertain reactions back from him. This Web app is for you! write and send whatever you thought without your name, no one could track you including karthik <h6 class="text-center">By karthik</h6></b></p>
+    <p class="text-center" >Ever hesitated to tell something to Karthik thinking an uncertain reaction back from him. This Web app is right for you! Write and send whatever you thought and Karthik-Ironman will reply you! <h6 class="text-center">By karthik</h6></b></p>
 <b-alert 
     v-if='isempty'
     class="text-center"
@@ -40,7 +40,7 @@
 
 
 <b-list-group style="padding:20px;">
-  <b-list-group-item v-for="item in readmsg" class="text-center">{{item.message}}</b-list-group-item>
+  <b-list-group-item v-for="item in readmsg" class="text-center">{{item.message }} <br> <b-badge variant="info">{{item.reply}}</b-badge></b-list-group-item>
 </b-list-group>
 
    
@@ -57,6 +57,7 @@ export default {
     data(){
         return{
             msg:'',
+            reply:[],
             readmsg:[],
             issent:false,
             isempty:false
