@@ -1,7 +1,7 @@
 <template>
 <div>
     <h1 class="text-center">Secret to Karthik</h1>
-    <p class="text-center" >Ever hesitated to tell something to Karthik thinking an uncertain reaction back from him. This Web app is right for you! Write and send whatever you thought and Karthik-Ironman will reply you! <h6 class="text-center">By karthik</h6></b></p>
+    <p >Ever hesitated to tell something to Karthik thinking an uncertain reaction back from him. This Web app is right for you! Write and send whatever you thought and Karthik-Ironman will reply you! <h6 class="text-center">By karthik</h6></b></p>
 <b-alert 
     v-if='isempty'
     class="text-center"
