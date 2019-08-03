@@ -1,7 +1,7 @@
 <template>
 <div>
     <h1 class="text-center">Secret to Karthik</h1>
-    <p class="text-center" >No one can find you, even Karthik. But the Messages will be public!</p>
+    <p class="text-center" >Ever hesitated to tell something to Karthik thinking uncertain reactions back from him. This Web app is for you! write and send whatever you thought without your name, no one could track you including karthik <h6 class="text-center">By karthik</h6></b></p>
 <b-alert 
     v-if='isempty'
     class="text-center"
