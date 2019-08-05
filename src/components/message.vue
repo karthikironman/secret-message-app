@@ -99,12 +99,6 @@ export default {
                     return color;
                     },
 
-
-
-                
-
-
-
         
     }
 }
