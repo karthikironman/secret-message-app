@@ -1,8 +1,10 @@
 <template>
-<div>
-    <h1 class="text-center">Secret to Karthik</h1>
-    <p >Ever hesitated to tell something to Karthik thinking an uncertain reaction back from him. This Web app is right for you! Write and send whatever you thought and Karthik-Ironman will reply you! <h6 class="text-center">By karthik</h6></b></p>
-<b-alert 
+<div> 
+     <h1 class="text-center headings">Secret to Karthik  <font-awesome-icon icon="user-secret" /> </h1>
+    <p style='padding: 0 10px 0 10px; ' ><b>Ever hesitated to tell something to Karthik thinking an uncertain reaction back from him. This Web app is right for you! Write and send whatever you thought and Karthik-Ironman will reply you!</b></p>
+
+    <div v-if="isNext">
+   <b-alert 
     v-if='isempty'
     class="text-center"
     show variant="danger">
@@ -29,38 +31,66 @@
 </b-button>
 
 <b-button 
-    
+    v-if="isSeeOthers"
     style="width:60%;margin:10px 20%  0 20%;"
     pill 
     variant="outline-secondary" 
     @click="readMessage()" >
     see what other people wrote
 </b-button>
+<b-button 
+    v-if="!isSeeOthers"
+    style="width:60%;margin:10px 20%  0 20%;"
+    pill 
+    variant="outline-secondary" 
+    @click="HideMessage()" >
+    Hide
+</b-button>
 
 
 
-<b-list-group style="padding:20px;">
-  <b-list-group-item v-for="item in readmsg" class="text-center">{{item.message }} <br> <b-badge variant="info">{{item.reply}}</b-badge></b-list-group-item>
+<b-list-group v-if="!isSeeOthers" style="padding:20px; margin-bottom:30px;">
+  <b-list-group-item v-for="item in readmsg" class="text-center othersMessage">{{item.message }} <br> <b-badge variant="info">{{item.reply}}</b-badge></b-list-group-item>
+  
 </b-list-group>
 
    
 
 
 
-
 </div>
+<div v-if="isNext==false">
+  <div class="putInCenter"><!--this is just for ingognito button -->
+       <b-button 
+        class="startHere text-center"
+        @click="showInput()"
+        variant="outline-dark">
+        <font-awesome-icon icon="user-secret" /> 
+        <h5>start here</h5>
+        </b-button>
+  </div><!--end of ingognito button -->
+</div>
+<footers />
+</div>
+
 </template>
 
 <script>
+import footers from './footer.vue'
 export default {
     name:'message',
+    components:{
+        footers
+    },
     data(){
         return{
             msg:'',
             reply:[],
             readmsg:[],
             issent:false,
-            isempty:false
+            isempty:false,
+            isNext:false,
+            isSeeOthers:true,
         };
     },
     created:{
@@ -80,7 +110,7 @@ export default {
 
         },
          readMessage()
-        {
+        {   this.isSeeOthers = false;
            
             window.db.collection('test').get().then((querySnapshot)=>{
                 let allMessages = [];
@@ -90,6 +120,9 @@ export default {
                 this.readmsg = allMessages;
             })
         },
+         HideMessage(){
+                this.isSeeOthers = true;
+            },
              getRandomColor() {
                     var letters = '0123456789ABCDEF';
                     var color = '#';
@@ -98,6 +131,10 @@ export default {
                     }
                     return color;
                     },
+            showInput(){
+                this.isNext=true;
+            },
+           
 
         
     }
@@ -105,4 +142,23 @@ export default {
 
 </script>
 <style>
+.startHere{
+   
+    font-size:600%;
+    background-color: white;
+    
+    
+}
+.putInCenter{
+width:20%;
+margin: 0 40% 0 40%;
+}
+.headings{
+    background-color: black;
+    color:white;
+    padding:20px;
+}
+.othersMessage{
+    border-top: 2px solid black;
+}
 </style>

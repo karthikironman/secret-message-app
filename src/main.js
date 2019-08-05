@@ -7,7 +7,15 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import login from './components/login.vue'
 import home from './components/home.vue'
+import footers from './components/footer.vue'
 import message from './components/message.vue'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+library.add(faUserSecret)
+
+Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 require("firebase/firestore");
 
