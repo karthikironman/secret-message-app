@@ -1,7 +1,7 @@
 <template>
 <div> 
      <h1 class="text-center headings">Secret to Karthik  <font-awesome-icon icon="user-secret" /> </h1>
-    <p style='padding: 0 10px 0 10px; ' ><b>Ever hesitated to tell something to Karthik thinking an uncertain reaction back from him. This Web app is right for you! Write and send whatever you thought and Karthik-Ironman will reply you!</b></p>
+   
 
     <div v-if="isNext">
    <b-alert 
@@ -16,9 +16,10 @@
     show variant="info">
     Message successfully sent!
 </b-alert>
-
-<b-form-input 
-    style="width:60%;margin:10px 20% 0 20%;"
+<div class="formBox"> <!--start of input form -->
+    <br>
+    <b-form-input 
+    style="width:60%; height:80px;margin:10px 20% 0 20%;"
     placeholder="message"
     v-model="msg"
     />
@@ -34,10 +35,11 @@
     v-if="isSeeOthers"
     style="width:60%;margin:10px 20%  0 20%;"
     pill 
-    variant="outline-secondary" 
-    @click="readMessage()" >
+    variant="info" 
+    @click=" toggleLoading();" >
     see what other people wrote
 </b-button>
+<span v-if="loading">{{readMessage()}}</span>
 <b-button 
     v-if="!isSeeOthers"
     style="width:60%;margin:10px 20%  0 20%;"
@@ -46,11 +48,18 @@
     @click="HideMessage()" >
     Hide
 </b-button>
+  <br> <br>
+
+
+
+
+</div>  <!--end of input form -->
+
 
 
 
 <b-list-group v-if="!isSeeOthers" style="padding:20px; margin-bottom:30px;">
-  <b-list-group-item v-for="item in readmsg" class="text-center othersMessage">{{item.message }} <br> <b-badge variant="info">{{item.reply}}</b-badge></b-list-group-item>
+  <b-list-group-item v-for="item in readmsg" class="text-center othersMessage">{{item.message }} <br> <b-badge  variant="info">{{item.reply}}</b-badge></b-list-group-item>
   
 </b-list-group>
 
@@ -59,8 +68,8 @@
 
 
 </div>
-<div v-if="isNext==false">
-  <div class="putInCenter"><!--this is just for ingognito button -->
+<div class="startPoint" v-if="isNext==false">
+  <p class='text-center'><!--this is just for ingognito button -->
        <b-button 
         class="startHere text-center"
         @click="showInput()"
@@ -68,19 +77,36 @@
         <font-awesome-icon icon="user-secret" /> 
         <h5>start here</h5>
         </b-button>
-  </div><!--end of ingognito button -->
+  </p><!--end of ingognito button -->
 </div>
+<vue-content-loading v-if="loading==1" :width="300" :height="300">
+      <rect x="20%" y="0" rx="8" ry="8" width=60% height="25" speed="5" />
+        <rect x="20%" y="40" rx="8" ry="8" width=60% height="25" speed="5" />
+          <rect x="20%" y="75" rx="8" ry="8" width=60% height="25" speed="5" />
+            <rect x="20%" y="105" rx="8" ry="8" width=60% height="25" speed="5" />
+              <rect x="20%" y="140" rx="8" ry="8" width=60% height="25" speed="5" />
+                <rect x="20%" y="175" rx="8" ry="8" width=60% height="25" speed="5" />
+                  <rect x="20%" y="205" rx="8" ry="8" width=60% height="25" speed="5" />
+                    <rect x="20%" y="240" rx="8" ry="8" width=60% height="25" speed="5" />
+                      <rect x="20%" y="275" rx="8" ry="8" width=60% height="25" speed="5" />
+                        <rect x="20%" y="305" rx="8" ry="8" width=60% height="25" speed="5" />
+
+</vue-content-loading>
 <footers />
+
 </div>
 
 </template>
 
 <script>
-import footers from './footer.vue'
+import VueContentLoading from 'vue-content-loading';
+import footers from './footer.vue';
+
 export default {
     name:'message',
     components:{
-        footers
+        footers,
+        VueContentLoading,
     },
     data(){
         return{
@@ -91,6 +117,7 @@ export default {
             isempty:false,
             isNext:false,
             isSeeOthers:true,
+            loading:false,
         };
     },
     created:{
@@ -118,7 +145,9 @@ export default {
                     allMessages.push(doc.data())
                 })
                 this.readmsg = allMessages;
+               this.loading = false;
             })
+               
         },
          HideMessage(){
                 this.isSeeOthers = true;
@@ -131,9 +160,15 @@ export default {
                     }
                     return color;
                     },
+            
             showInput(){
                 this.isNext=true;
             },
+            toggleLoading()
+            {
+                this.loading = !this.loading;
+            }
+           
            
 
         
@@ -142,16 +177,20 @@ export default {
 
 </script>
 <style>
+.reply{
+ 
+}
 .startHere{
    
-    font-size:600%;
+    font-size:1000%;
     background-color: white;
+    box-shadow:  2px 2px 5px grey;
     
     
 }
 .putInCenter{
-width:20%;
-margin: 0 40% 0 40%;
+width:10%;
+margin: 0 auto;
 }
 .headings{
     background-color: black;
@@ -160,5 +199,15 @@ margin: 0 40% 0 40%;
 }
 .othersMessage{
     border-top: 2px solid black;
+}
+.startPoint{
+   
+}
+.formBox{
+    background-color: black;
+    width: 50%;
+    margin: 0 auto;
+    margin-top:20px;
+    border-radius:10px;
 }
 </style>
