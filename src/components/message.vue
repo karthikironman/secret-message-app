@@ -59,7 +59,7 @@
 
 
 <b-list-group v-if="!isSeeOthers" style="padding:20px; margin-bottom:30px;">
-  <b-list-group-item v-for="item in readmsg" class="text-center othersMessage">{{item.message }} <br> <b-badge  variant="info">{{item.reply}}</b-badge></b-list-group-item>
+  <b-list-group-item v-for="item in readmsg" class="text-center othersMessage">{{item.message }} <br> <b-badge  variant="info">{{item.reply}}</b-badge>  <br> <img v-if="item.image"  class="replyMsg" v-bind:src="item.image"></b-list-group-item>
   
 </b-list-group>
 
@@ -209,5 +209,10 @@ margin: 0 auto;
     margin: 0 auto;
     margin-top:20px;
     border-radius:10px;
+}
+.replyMsg{
+    width:50%;
+    height:200px;
+    margin:auto;
 }
 </style>
