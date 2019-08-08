@@ -5,7 +5,7 @@
 
     <div v-if="isNext">
    <b-alert 
-    v-if='isempty'
+    v-if='isempty' 
     class="text-center"
     show variant="danger">
     You can't send an empty message
